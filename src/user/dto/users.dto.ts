@@ -1,21 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, IsBoolean, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsBoolean, IsOptional, MaxLength } from 'nestjs-class-validator';
+import { User } from '@prisma/client';
+
+const MAX_NAME_LENGTH = 255;
+const MAX_ROLE_LENGTH = 255;
 
 export class CreateUserDto {
-  @IsString()
+  @IsString({
+    language: "ru",
+  })
+  @MaxLength(MAX_NAME_LENGTH, {
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Полное имя пользователя',
     example: 'Иванов Александр',
   })
   full_name: string;
 
-  @IsString()
+  @IsString({
+    language: "ru",
+  })
+  @MaxLength(MAX_ROLE_LENGTH, {
+    language: "ru",
+  })
   @ApiProperty({
     example: 'Роль пользователя',
   })
   role: string;
 
-  @IsNumber()
+  @IsNumber(undefined, {
+    language: "ru"
+  })
   @ApiProperty({
     example: 100,
   })
@@ -26,14 +42,14 @@ type TResponseCreateUser = {
   id: number;
 };
 
-type TUser = CreateUserDto & TResponseCreateUser;
-
 type TUsers = {
-  users: TUser[]
+  users: User[]
 }
 
 export class ResponseCreateDto {
-  @IsBoolean()
+  @IsBoolean({
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Успешность ответа',
     example: 'true',
@@ -48,7 +64,9 @@ export class ResponseCreateDto {
 }
 
 export class ResponseUsersDto {
-  @IsBoolean()
+  @IsBoolean({
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Успешность ответа',
     example: 'true',
@@ -62,22 +80,34 @@ export class ResponseUsersDto {
 }
 
 export class UpdateUserDto {
-  @IsString()
+  @IsString({
+    language: "ru",
+  })
   @IsOptional()
+  @MaxLength(MAX_NAME_LENGTH, {
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Полное имя пользователя',
     example: 'Иванов Александр',
   })
   full_name: string;
 
-  @IsString()
+  @IsString({
+    language: "ru",
+  })
   @IsOptional()
+  @MaxLength(MAX_ROLE_LENGTH, {
+    language: "ru",
+  })
   @ApiProperty({
     example: 'Роль пользователя',
   })
   role: string;
 
-  @IsNumber()
+  @IsNumber(undefined, {
+    language: "ru",
+  })
   @IsOptional()
   @ApiProperty({
     example: 100,
@@ -86,7 +116,9 @@ export class UpdateUserDto {
 }
 
 export class ResponseUpdateDto {
-  @IsBoolean()
+  @IsBoolean({
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Успешность ответа',
     example: 'true',
@@ -97,11 +129,13 @@ export class ResponseUpdateDto {
     description: 'Результат',
     example: '{"id": 12}',
   })
-  result: TResponseCreateUser & CreateUserDto;
+  result: User;
 }
 
 export class ResponseDeleteManyDto {
-  @IsBoolean()
+  @IsBoolean({
+    language: "ru",
+  })
   @ApiProperty({
     description: 'Успешность ответа',
     example: 'true',

@@ -13,7 +13,6 @@ import {
   ApiBody,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
@@ -51,16 +50,19 @@ export class UserController {
     name: 'full_name',
     description: 'Полное имя',
     example: 'Иванов Иван',
+    required: false,
   })
   @ApiQuery({
     name: 'role',
     description: 'Роль пользователя',
     example: 'Читатель',
+    required: false,
   })
   @ApiQuery({
     name: 'efficiency',
     description: 'Эффективность пользователя',
     example: 98,
+    required: false,
   })
   @Get('get')
   async getUsers(
@@ -71,7 +73,7 @@ export class UserController {
     const users = await this.userService.getAll({
       full_name,
       role,
-      efficiency: Number(efficiency),
+      efficiency: efficiency ? Number(efficiency) : undefined,
     });
     return {
       success: true,
@@ -89,7 +91,7 @@ export class UserController {
     return {
       success: true,
       result: {
-        users: [user],
+        users: user ? [user] : [],
       },
     };
   }

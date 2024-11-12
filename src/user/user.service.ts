@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { User, Prisma, PrismaClient } from '@prisma/client';
+import { User, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
-import { CreateUserDto, UpdateUserDto } from './dto/users.dto';
+import { CreateUserDto } from './dto/users.dto';
 
 type TParams = {
   full_name?: string;
